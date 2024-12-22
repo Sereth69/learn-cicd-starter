@@ -20,3 +20,19 @@ jobs:
 
       - name: Build the app
         run: ./scripts/buildprod.sh
+
+      - name: Authenticate with GCP
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Verify gcloud CLI
+        run: gcloud info
+
+      - name: Build and push Docker image
+        run: |
+          gcloud builds submit --tag us-central1-docker.pkg.dev/rare-mender-445507-n4/notely-ar-repo/notely:latest .
