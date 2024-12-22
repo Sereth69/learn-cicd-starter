@@ -36,3 +36,5 @@ jobs:
       - name: Build and push Docker image
         run: |
           gcloud builds submit --tag us-central1-docker.pkg.dev/rare-mender-445507-n4/notely-ar-repo/notely:latest .
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/rare-mender-445507-n4/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project rare-mender-445507-n4 --max-instances=4
